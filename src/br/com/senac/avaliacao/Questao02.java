@@ -165,7 +165,7 @@ public class Questao02 {
 
     public static void pesquisar() {
         String filtro = JOptionPane.showInputDialog("Digite o filtro:\n\n*Marca\n*Modelo");
-        String msg = " Tipo do veículo      Marca     Modelo    Ano    Valor   IPVA(%)\n\n ";
+        String msg = " Tipo do veículo      Marca     Modelo    Ano               Valor IPVA(%)\n\n ";
         for (int i = 0; i < INDICE; i++) {
             boolean status = (boolean) BANCO_DADOS[i][5];
             if (status) {
@@ -173,10 +173,10 @@ public class Questao02 {
                 String modelo = (String) BANCO_DADOS[i][2];
                 if (marca.toUpperCase().contains(filtro.toUpperCase()) || modelo.toUpperCase().contains(filtro.toUpperCase())) {
                     msg += BANCO_DADOS[i][0] + "             ";
-                    msg += BANCO_DADOS[i][1] + "           ";
-                    msg += BANCO_DADOS[i][2] + "           ";
-                    msg += BANCO_DADOS[i][3] + "           ";
-                    msg += BANCO_DADOS[i][4] + "           ";
+                    msg += BANCO_DADOS[i][1] + "            ";
+                    msg += BANCO_DADOS[i][2] + "            ";
+                    msg += BANCO_DADOS[i][3] + "            ";
+                    msg += BANCO_DADOS[i][4] + "            ";
                     String tipo = (String) BANCO_DADOS[i][0];
                     if (tipo.equalsIgnoreCase("carro")) {
                         msg += "IPVA aplicado é de : -" + 3 + "%\n";
