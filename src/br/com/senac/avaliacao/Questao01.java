@@ -1,5 +1,6 @@
 package br.com.senac.avaliacao;
 
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -10,8 +11,12 @@ import javax.swing.JOptionPane;
 public class Questao01 {
 
     /**
-     * 0 = Inscrição do Imóvel(string); 1 = proprietario(String); 2 = Area do
-     * imóvel(double); 3 = tipo do imóvel(int);
+     * 0 = Inscrição do Imóvel(string); 
+     * 1 = proprietario(String); 
+     * 2 = Area do imóvel(double); 
+     * 3 = tipo do imóvel(int); 
+     * 4 = inativar imovel(boolean);
+     *
      */
     public static Object[][] BANCO_DADOS;
     public static int INDICE = 0;
@@ -20,7 +25,10 @@ public class Questao01 {
         BANCO_DADOS = new Object[20][5];
         int opcao = 0;
         do {
-            String menu = "1) Incluir\n2)Excluir\n3)Editar\n4)Pesquisar\n6) Relatório\n0) Sair";
+            String menu = "_____________________________________________\n"
+                    + "\n                                           MENU\n"
+                    + "_____________________________________________\n\n"
+                    + "1) Incluir\n2) Excluir\n3) Editar\n4) Pesquisar\n5) Valor do Imóvel\n6) Relatório\n0) Sair\n";
             String aux = JOptionPane.showInputDialog(menu);
             opcao = Integer.parseInt(aux);
             switch (opcao) {
@@ -36,11 +44,14 @@ public class Questao01 {
                 case 4:
                     pesquisar();
                     break;
+                case 5:
+                    valorMercado();
+                    break;
                 case 6:
                     relatorio();
                     break;
                 case 0:
-                    System.out.println("Tchau");
+                    JOptionPane.showMessageDialog(null,"Tchau");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opção Inválida");
@@ -69,19 +80,19 @@ public class Questao01 {
     }
 
     public static String obterListagem() {
-        String msg = "Incrição do Imóvel  Propiretário  Area  Tipo  Taxa de lixo\n";
+        String msg = "Incrição do Imóvel       Propiretário      Area     Tipo     Taxa de lixo\n";
         for (int i = 0; i < INDICE; i++) {
             Object temp = BANCO_DADOS[i][4];
             boolean status = (boolean) temp;
             if (status) {
-                msg += BANCO_DADOS[i][0] + "  ";
-                msg += BANCO_DADOS[i][1] + "  ";
-                msg += BANCO_DADOS[i][2] + "  ";
-                msg += BANCO_DADOS[i][3] + "  ";
+                msg += BANCO_DADOS[i][0] + "      ";
+                msg += BANCO_DADOS[i][1] + "      ";
+                msg += BANCO_DADOS[i][2] + "      ";
+                //msg += BANCO_DADOS[i][3] + "      ";
                 if ((int) BANCO_DADOS[i][3] == 1) {
-                    msg += "Residencial  R$" + 15.0;
+                    msg += "    Residencial  R$" + 15.0 + "\n";
                 } else {
-                    msg += "Comercial  R$" + 21.0;
+                    msg += "    Comercial  R$" + 21.0 + "\n";
                 }
             }
         }
@@ -134,19 +145,37 @@ public class Questao01 {
                 String insc = (String) BANCO_DADOS[i][0];
                 String prop = (String) BANCO_DADOS[i][1];
                 if (prop.toUpperCase().contains(filtro.toUpperCase()) || filtro.equalsIgnoreCase(insc)) {
-                    msg += BANCO_DADOS[i][0] + "    ";
+                    msg += BANCO_DADOS[i][0] + "            ";
                     msg += BANCO_DADOS[i][1] + "    ";
                     msg += BANCO_DADOS[i][2] + "    ";
                     msg += BANCO_DADOS[i][3] + "    ";
                     if ((int) BANCO_DADOS[i][3] == 1) {
-                        msg += "Residencial  R$" + 15.0;
+                        msg += "       Residencial  R$" + 15.0;
                     } else {
-                        msg += "Comercial  R$" + 21.0;
+                        msg += "       Comercial  R$" + 21.0;
 
                     }
                 }
             }
         }
         JOptionPane.showMessageDialog(null, msg);
+    }
+
+    public static void valorMercado() {
+        String inscricao = obterListagem();
+        inscricao += "\n Residencial: 3.500m²\n Comercial: 3.700m²\n\n Digite a inscricao do imóvel:";
+        String numeroInscricao = JOptionPane.showInputDialog(inscricao);
+        double valorArea = 0.0;
+        DecimalFormat df = new DecimalFormat("#####.00");
+        for (int i = 0; i < INDICE; i++) {
+            double area = (double) BANCO_DADOS[i][2];
+            if ((int) BANCO_DADOS[i][3] == 1) {
+                valorArea = 3500 * area;
+            } else {
+                valorArea = 3700 * area;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "O valor do imóvel é: R$ " + df.format(valorArea));
     }
 }
