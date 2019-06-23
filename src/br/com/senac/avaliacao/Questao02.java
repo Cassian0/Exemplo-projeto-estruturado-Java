@@ -29,9 +29,9 @@ public class Questao02 {
         int opcao = 0;
         do {
             String menu ="______________________________________________\n"
-                    + "\n                                             MENU\n"
+                    + "\n                                             FIPE\n"
                     + "______________________________________________\n\n"
-                    + "1) Incluir\n2) Excluir\n3) Editar\n4) Pesquisar\n5) Relatório\n0) Sair";
+                    + "1) Incluir\n2) Excluir\n3) Editar\n4) Pesquisar\n5) IPVA\n6) Relatório\n0) Sair";
             opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
 
             switch (opcao) {
@@ -48,6 +48,9 @@ public class Questao02 {
                     pesquisar();
                     break;
                 case 5:
+                    valorCobrado();
+                    break;
+                case 6:
                     relatorio();
                     break;
                 case 0:
@@ -188,6 +191,29 @@ public class Questao02 {
             }
         }
         JOptionPane.showMessageDialog(null, msg);
-
     }
+    
+    public static void valorCobrado() {
+        String lista = obterLista();
+        lista += "Informe o modelo:";
+        System.out.println(lista);
+        String modelo = JOptionPane.showInputDialog(lista);
+        double valorIpva = 0;
+        DecimalFormat numeroFormatado = new DecimalFormat("0.00");
+        for (int i = 0; i < INDICE; i++) {
+            double valor = (double) BANCO_DADOS[i][4];
+              String tipo = (String) BANCO_DADOS[i][0];
+                    if (tipo.equalsIgnoreCase("carro")) {
+                        valorIpva = valor * 0.03;
+                    }
+                    if (tipo.equalsIgnoreCase("moto")) {
+                        valorIpva = valor * 0.02;
+                    }
+                    if (tipo.equalsIgnoreCase("onibus")) {
+                        valorIpva = valor * 0.04;
+                    }
+                    }
+        JOptionPane.showMessageDialog(null,"O IPVA cobrado é de : R$" + numeroFormatado.format(valorIpva));
+            
+        }
 }
