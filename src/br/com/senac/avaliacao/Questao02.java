@@ -28,7 +28,7 @@ public class Questao02 {
         BANCO_DADOS = new Object[20][6];
         int opcao = 0;
         do {
-            String menu ="______________________________________________\n"
+            String menu = "______________________________________________\n"
                     + "\n                                             FIPE\n"
                     + "______________________________________________\n\n"
                     + "1) Incluir\n2) Excluir\n3) Editar\n4) Pesquisar\n5) IPVA\n6) Relatório\n0) Sair";
@@ -91,15 +91,15 @@ public class Questao02 {
          * AUTOMOVEL DESEJADO INFORMANDO O IPVA DE ACORDO COM A CATEGORIA DO
          * VEICULO.
          */
-        String msg = " Tipo do veículo      Marca     Modelo    Ano    Valor   IPVA(%)\n\n ";
-        for (int i = 0; i < INDICE; i++) {
+        String msg = "  Tipo do veículo         Marca           Modelo            Ano                  Valor IPVA(%)\n\n ";
+        for (int i = 0; i < INDICE; i++) { 
             boolean status = (boolean) BANCO_DADOS[i][5];
             if (status) {
-                msg += BANCO_DADOS[i][0] + "           ";
-                msg += BANCO_DADOS[i][1] + "           ";
-                msg += BANCO_DADOS[i][2] + "           ";
-                msg += BANCO_DADOS[i][3] + "           ";
-                msg += BANCO_DADOS[i][4] + "           ";
+                msg += BANCO_DADOS[i][0] + "             ";
+                msg += BANCO_DADOS[i][1] + "              ";
+                msg += BANCO_DADOS[i][2] + "             ";
+                msg += BANCO_DADOS[i][3] + "             ";
+                msg += BANCO_DADOS[i][4] + "             ";
                 String tipo = (String) BANCO_DADOS[i][0];
                 if (tipo.equalsIgnoreCase("carro")) {
                     msg += "IPVA aplicado é de : -" + 3 + "%\n";
@@ -129,7 +129,7 @@ public class Questao02 {
         for (int i = 0; i < INDICE; i++) {
             String modelo = (String) BANCO_DADOS[i][2];
             if (modelo.equals(veiculoSelecionado)) {
-                linhaSelelcionada = 1;
+                linhaSelelcionada = i;
             }
         }
         return linhaSelelcionada;
@@ -192,28 +192,30 @@ public class Questao02 {
         }
         JOptionPane.showMessageDialog(null, msg);
     }
-    
+
     public static void valorCobrado() {
         String lista = obterLista();
         lista += "Informe o modelo:";
-        System.out.println(lista);
         String modelo = JOptionPane.showInputDialog(lista);
         double valorIpva = 0;
         DecimalFormat numeroFormatado = new DecimalFormat("0.00");
         for (int i = 0; i < INDICE; i++) {
-            double valor = (double) BANCO_DADOS[i][4];
-              String tipo = (String) BANCO_DADOS[i][0];
-                    if (tipo.equalsIgnoreCase("carro")) {
-                        valorIpva = valor * 0.03;
-                    }
-                    if (tipo.equalsIgnoreCase("moto")) {
-                        valorIpva = valor * 0.02;
-                    }
-                    if (tipo.equalsIgnoreCase("onibus")) {
-                        valorIpva = valor * 0.04;
-                    }
-                    }
-        JOptionPane.showMessageDialog(null,"O IPVA cobrado é de : R$" + numeroFormatado.format(valorIpva));
-            
+            String modeloVeiculo = (String) BANCO_DADOS[i][2];
+            if (modeloVeiculo.equalsIgnoreCase(modelo)) {
+                double valor = (double) BANCO_DADOS[i][4];
+                String tipo = (String) BANCO_DADOS[i][0];
+                if (tipo.equalsIgnoreCase("carro")) {
+                    valorIpva = valor * 0.03;
+                }
+                if (tipo.equalsIgnoreCase("moto")) {
+                    valorIpva = valor * 0.02;
+                }
+                if (tipo.equalsIgnoreCase("onibus")) {
+                    valorIpva = valor * 0.04;
+                }
+            }
         }
+        JOptionPane.showMessageDialog(null, "O IPVA cobrado é de : R$" + numeroFormatado.format(valorIpva));
+
+    }
 }

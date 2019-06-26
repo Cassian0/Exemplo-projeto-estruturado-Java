@@ -11,11 +11,8 @@ import javax.swing.JOptionPane;
 public class Questao01 {
 
     /**
-     * 0 = Inscrição do Imóvel(string); 
-     * 1 = proprietario(String); 
-     * 2 = Area do imóvel(double); 
-     * 3 = tipo do imóvel(int); 
-     * 4 = inativar imovel(boolean);
+     * 0 = Inscrição do Imóvel(string); 1 = proprietario(String); 2 = Area do
+     * imóvel(double); 3 = tipo do imóvel(int); 4 = inativar imovel(boolean);
      *
      */
     public static Object[][] BANCO_DADOS;
@@ -51,7 +48,7 @@ public class Questao01 {
                     relatorio();
                     break;
                 case 0:
-                    JOptionPane.showMessageDialog(null,"Tchau");
+                    JOptionPane.showMessageDialog(null, "Tchau");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opção Inválida");
@@ -80,7 +77,7 @@ public class Questao01 {
     }
 
     public static String obterListagem() {
-        String msg = "Incrição do Imóvel       Propiretário      Area     Tipo     Taxa de lixo\n";
+        String msg = "Incrição do Imóvel        Propiretário        Area       Tipo        Taxa de lixo\n";
         for (int i = 0; i < INDICE; i++) {
             Object temp = BANCO_DADOS[i][4];
             boolean status = (boolean) temp;
@@ -115,7 +112,7 @@ public class Questao01 {
         for (int i = 0; i < INDICE; i++) {
             String inscricao = (String) BANCO_DADOS[i][0];
             if (inscricao.equals(numeroInscricaoAoagar)) {
-                linhaSelecionada = 1;
+                linhaSelecionada = i;
             }
         }
         return linhaSelecionada;
@@ -166,13 +163,16 @@ public class Questao01 {
         inscricao += "\n Residencial: 3.500m²\n Comercial: 3.700m²\n\n Digite a inscricao do imóvel:";
         String numeroInscricao = JOptionPane.showInputDialog(inscricao);
         double valorArea = 0.0;
-        DecimalFormat df = new DecimalFormat("#####.00");
+        DecimalFormat df = new DecimalFormat("00.00");
         for (int i = 0; i < INDICE; i++) {
-            double area = (double) BANCO_DADOS[i][2];
-            if ((int) BANCO_DADOS[i][3] == 1) {
-                valorArea = 3500 * area;
-            } else {
-                valorArea = 3700 * area;
+            String inscricaoSelecionada = (String) BANCO_DADOS[i][0];
+            if (inscricaoSelecionada.equalsIgnoreCase(numeroInscricao)) {
+                double area = (double) BANCO_DADOS[i][2];
+                if ((int) BANCO_DADOS[i][3] == 1) {
+                    valorArea = 3500 * area;
+                } else {
+                    valorArea = 3700 * area;
+                }
             }
         }
 
